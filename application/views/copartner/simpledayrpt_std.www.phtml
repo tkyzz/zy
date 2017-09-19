@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+    <title>日报</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head><body>
+<?php
+echo $this->copartner." - ".$this->rptYmd."<hr>";
+echo \Sooh2\Util::toJsonSimple($this->rptDay);
+echo $this->trace;
+echo "<hr>一周内注册用户情况：<br><table border=1><tr><th>用户<th>手机号<th>用户注册时间<th>绑卡时间<th>投资时间<th>投资项目</tr>";
+
+foreach($this->rptDetail as $r){
+    echo '<tr><td>'.implode('</td><td>&nbsp;',$r);
+}
+
+?>
+    </body></html>
+

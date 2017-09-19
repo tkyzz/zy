@@ -1,0 +1,41 @@
+﻿1.创建数据库
+CREATE DATABASE `jz_db` CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE `db_account0` CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE `db_log` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+2.进入jz_db数据库,依次执行
+表结构.sql
+表数据.sql
+
+添加到定时任务 /etc/crontab
+0  *  *  *  *  root php /usr/local/openresty/nginx/html/php/console/run.php "request_uri=/console/evthour/runtype/crond" 2>&1 &
+0  *  *  *  *  root php /usr/local/openresty/nginx/html/php/console/run.php request_uri=/console/hourly 2>&1 &
+# */1 * *  *  *  svn up ~/phpdir/ --username tanggaohang --password 123456
+*/1 * *  *  *  root php /usr/local/openresty/nginx/html/php/console/run.php request_uri=/console/getProductInfo 2>&1 &
+*/1 * *  *  *  root chmod 666 /var/log/php_errors.log
+
+
+3.进入html目录
+svn checkout svn://106.14.255.143/zhangyue/xxxxxxxxxxxx/php
+
+3.1 进入 cd /usr/local/openresty/nginx/html/php/application/modules/ 添加软连接(nginx里面存在对应配置)
+ln -s Tests/ Tests1
+ln -s Platform/ Platform1
+ln -s Manage/ Manage1
+ln -s Actives/ Actives1
+
+4.上传nginx配置，重启nginx
+注意:前置服务器的nginx配置不要包含后台manage的配置
+nginx/conf/php 下面的 manage.conf 文件不要上传到前置服务器
+
+5.php/conf 添加 
+_open_test_model.ini  (生产环境不要上传这个文件!!!)
+
+6.innerSign.ini 添加服务器白名单 ip
+
+7.创建目录,并给读写权限
+进入 /usr/local/openresty/nginx/html/php/html/
+上传 根目录的 notice 文件夹
+执行
+chmod -R 777 /usr/local/openresty/nginx/html/php/html/notice

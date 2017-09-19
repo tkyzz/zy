@@ -1,0 +1,259 @@
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `tb_checkin_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_checkin_0`;
+CREATE TABLE `tb_checkin_0` (
+  `userId` varchar(32) NOT NULL COMMENT '用户ID',
+  `ymd` int(11) unsigned NOT NULL COMMENT '签到日期',
+  `total` int(11) unsigned NOT NULL COMMENT '总签到次数',
+  `number` int(11) unsigned NOT NULL COMMENT '当前签到次数',
+  `date` int(11) unsigned NOT NULL COMMENT '具体签到时间',
+  `bonus` varchar(255) DEFAULT NULL COMMENT '奖励',
+  `rowVersion` int(11) NOT NULL DEFAULT '1',
+  `rowLock` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`userId`,`ymd`),
+  KEY `ymd` (`ymd`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户签到表';
+
+
+-- ----------------------------
+-- Table structure for `tb_crondlog_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_crondlog_0`;
+CREATE TABLE `tb_crondlog_0` (
+  `ymdh` bigint(20) NOT NULL,
+  `taskid` varchar(64) NOT NULL,
+  `lastStatus` varchar(2000) NOT NULL,
+  `lastRet` tinyint(4) NOT NULL COMMENT '0: 未正常结束   1：正常结束',
+  `isManual` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:自动   1:手动',
+  `theminute` tinyint(4) NOT NULL,
+  `thesecond` tinyint(4) NOT NULL,
+  `rowVersion` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ymdh`,`taskid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `tb_evtque_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_evtque_0`;
+CREATE TABLE `tb_evtque_0` (
+  `evtid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `evt` varchar(36) NOT NULL DEFAULT '',
+  `objid` varchar(36) NOT NULL DEFAULT '',
+  `uid` varchar(36) NOT NULL DEFAULT '',
+  `args` varchar(36) NOT NULL DEFAULT '',
+  `ret` varchar(200) NOT NULL DEFAULT '',
+  `rowVersion` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`evtid`)
+) ENGINE=InnoDB AUTO_INCREMENT=995 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_evtque_0
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_evtque_log_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_evtque_log_0`;
+CREATE TABLE `tb_evtque_log_0` (
+  `evtid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `evt` varchar(36) NOT NULL DEFAULT '',
+  `objid` varchar(36) NOT NULL DEFAULT '',
+  `uid` varchar(36) NOT NULL DEFAULT '',
+  `args` varchar(36) NOT NULL DEFAULT '',
+  `ret` varchar(200) NOT NULL DEFAULT '',
+  `rowVersion` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`evtid`)
+) ENGINE=InnoDB AUTO_INCREMENT=995 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `tb_manage_config`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_manage_config`;
+CREATE TABLE `tb_manage_config` (
+  `identifies` varchar(80) NOT NULL DEFAULT '' COMMENT '英文唯一标识',
+  `name` varchar(80) NOT NULL DEFAULT '' COMMENT '名称',
+  `remark` varchar(500) NOT NULL DEFAULT '' COMMENT '备注',
+  `label` varchar(500) NOT NULL DEFAULT '' COMMENT 'label',
+  `group` varchar(40) NOT NULL DEFAULT '' COMMENT '分组',
+  `category` varchar(100) NOT NULL DEFAULT '' COMMENT '分类-具体',
+  `type` varchar(40) NOT NULL DEFAULT '' COMMENT '类型',
+  `value` varchar(1000) NOT NULL DEFAULT '' COMMENT '值',
+  `rowVersion` int(11) NOT NULL DEFAULT '1' COMMENT '版本号',
+  `rowLock` varchar(500) NOT NULL DEFAULT '' COMMENT '锁定信息',
+  PRIMARY KEY (`identifies`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台配置表';
+
+-- ----------------------------
+-- Records of tb_manage_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_manage_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_manage_menu`;
+CREATE TABLE `tb_manage_menu` (
+  `menuid` bigint(20) NOT NULL,
+  `topmenu` varchar(36) NOT NULL,
+  `sidemenu` varchar(36) NOT NULL,
+  `modulecontroller` varchar(36) NOT NULL,
+  `actionname` varchar(36) NOT NULL DEFAULT 'index',
+  PRIMARY KEY (`menuid`),
+  UNIQUE KEY `modulecontroller` (`modulecontroller`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_manage_menu
+-- ----------------------------
+
+INSERT INTO `tb_manage_menu` VALUES ('705000', '运营', '客服工具', 'manage-kfbasic', 'index');
+INSERT INTO `tb_manage_menu` VALUES ('708000', '运营', '公告管理', 'manage-notice', 'index');
+INSERT INTO `tb_manage_menu` VALUES ('901000', '系统', '管理员管理', 'manage-managers', 'index');
+
+-- ----------------------------
+-- Table structure for `tb_manage_notice`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_manage_notice`;
+CREATE TABLE `tb_manage_notice` (
+  `oid` varchar(32) NOT NULL,
+  `channelOid` varchar(32) DEFAULT NULL,
+  `title` varchar(64) DEFAULT NULL,
+  `linkUrl` varchar(256) DEFAULT NULL,
+  `linkHtml` text,
+  `subscript` varchar(32) DEFAULT NULL COMMENT 'New:新 Hot:热  无:无',
+  `sourceFrom` varchar(64) DEFAULT NULL,
+  `page` varchar(32) DEFAULT NULL COMMENT 'is:是 no:否',
+  `top` varchar(32) DEFAULT NULL COMMENT '1:置顶 2:不置顶',
+  `approveStatus` varchar(32) DEFAULT NULL COMMENT 'pass:通过，refused:驳回，toApprove:待审批',
+  `releaseStatus` varchar(32) DEFAULT NULL COMMENT 'ok:已上架，no:已下架，wait:待发布',
+  `operator` varchar(32) DEFAULT NULL,
+  `approveOpe` varchar(32) DEFAULT NULL,
+  `releaseOpe` varchar(32) DEFAULT NULL,
+  `remark` varchar(256) DEFAULT NULL,
+  `approveTime` datetime DEFAULT NULL,
+  `releaseTime` datetime DEFAULT NULL,
+  `onShelfTime` date DEFAULT NULL,
+  `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `rowVersion` int(20) DEFAULT '0',
+  `rowLock` varchar(200) DEFAULT '',
+  PRIMARY KEY (`oid`),
+  KEY `Index_1` (`page`,`releaseStatus`) USING BTREE,
+  KEY `Index_2` (`releaseStatus`) USING BTREE,
+  KEY `FK_Reference_43` (`channelOid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `tb_manager_session_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_manager_session_0`;
+CREATE TABLE `tb_manager_session_0` (
+  `sessionId` varchar(36) NOT NULL DEFAULT '0',
+  `userId` varchar(36) NOT NULL DEFAULT '',
+  `sessionData` varchar(500) NOT NULL DEFAULT '0',
+  `dtCreate` bigint(20) NOT NULL DEFAULT '0',
+  `dtUpdate` bigint(20) NOT NULL DEFAULT '0',
+  `durExpire` int(11) NOT NULL DEFAULT '0',
+  `dtExpire` bigint(20) NOT NULL DEFAULT '0',
+  `rowVersion` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sessionId`),
+  KEY `dtExpire` (`dtExpire`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `tb_managers_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_managers_0`;
+CREATE TABLE `tb_managers_0` (
+  `cameFrom` varchar(36) NOT NULL,
+  `loginName` varchar(36) NOT NULL,
+  `nickname` varchar(36) DEFAULT NULL,
+  `dept` varchar(20) NOT NULL DEFAULT '' COMMENT '部门',
+  `passwd` varchar(36) DEFAULT NULL,
+  `passwdSalt` varchar(36) DEFAULT NULL,
+  `regYmd` int(255) NOT NULL DEFAULT '0',
+  `regIP` varchar(16) NOT NULL DEFAULT '0.0.0.0',
+  `rights` varchar(2000) NOT NULL DEFAULT '' COMMENT '权限',
+  `lastIP` varchar(16) NOT NULL DEFAULT '0.0.0.0',
+  `lastYmd` int(11) NOT NULL DEFAULT '0',
+  `lastHis` int(11) NOT NULL DEFAULT '0',
+  `rowVersion` int(20) NOT NULL DEFAULT '0',
+  `rowLock` varchar(100) NOT NULL DEFAULT '',
+  `dtForbidden` varchar(10) DEFAULT '0' COMMENT '禁止登录时间',
+  PRIMARY KEY (`cameFrom`,`loginName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_managers_0
+-- ----------------------------
+INSERT INTO `tb_managers_0` VALUES ('local', 'kefu000', '王玉', 'skip', '123kf456', null, '0', '0.0.0.0', 'manage-kfbasic', '116.231.217.247', '1497959873', '0', '7', '', '0');
+INSERT INTO `tb_managers_0` VALUES ('local', 'root', '超级管理员', '运维', 'root123321', 'notused', '0', '127.0.0.1', '*', '116.231.217.247', '1497962988', '0', '9', '', '0');
+
+-- ----------------------------
+-- Table structure for `tb_msgsentlog_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_msgsentlog_0`;
+CREATE TABLE `tb_msgsentlog_0` (
+  `logid` bigint(20) NOT NULL,
+  `evtid` varchar(32) NOT NULL,
+  `ymdhis` bigint(20) NOT NULL,
+  `msgtitle` varchar(200) NOT NULL,
+  `msgcontent` varchar(2000) NOT NULL,
+  `users` varchar(1000) NOT NULL,
+  `ways` varchar(200) NOT NULL,
+  `sentret` varchar(2000) NOT NULL,
+  `rowVersion` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`logid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_msgsentlog_0
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_msgtpl_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_msgtpl_0`;
+CREATE TABLE `tb_msgtpl_0` (
+  `msgid` varchar(36) NOT NULL DEFAULT '',
+  `titletpl` varchar(100) NOT NULL DEFAULT '',
+  `contenttpl` varchar(500) NOT NULL DEFAULT '',
+  `ways` varchar(64) NOT NULL DEFAULT '' COMMENT '（msg：站内信等）',
+  `rowVersion` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`msgid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_msgtpl_0
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_user_0`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user_0`;
+CREATE TABLE `tb_user_0` (
+  `oid` varchar(32) NOT NULL,
+  `userAcc` varchar(32) DEFAULT NULL,
+  `memberOid` varchar(32) DEFAULT NULL,
+  `userPwd` varchar(64) DEFAULT NULL,
+  `salt` varchar(32) DEFAULT NULL,
+  `payPwd` varchar(64) DEFAULT NULL,
+  `paySalt` varchar(32) DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL COMMENT '1:正常，2：冻结',
+  `source` varchar(32) DEFAULT NULL COMMENT '1.后台添加，0，前台注册',
+  `sceneId` int(11) DEFAULT NULL,
+  `channelid` varchar(200) DEFAULT NULL,
+  `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `checkinBook` varchar(1000) NOT NULL DEFAULT '' COMMENT '签到簿',
+  `rowVersion` int(11) NOT NULL DEFAULT '1',
+  `rowLock` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`oid`),
+  UNIQUE KEY `Index_1` (`sceneId`) USING BTREE,
+  UNIQUE KEY `Index_2` (`userAcc`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

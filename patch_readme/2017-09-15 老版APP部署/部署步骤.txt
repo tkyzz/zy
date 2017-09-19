@@ -1,0 +1,9 @@
+﻿1.定时任务
+
+2.发送验证码转发
+Prj/Redis/Vcode
+oldVer
+
+3.测试环境配置布置
+
+4.trigger的添加

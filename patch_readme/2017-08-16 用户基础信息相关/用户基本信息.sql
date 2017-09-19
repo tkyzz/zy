@@ -1,0 +1,1 @@
+INSERT INTO `tb_manage_menu` VALUES ('706596', '运营', '用户基本信息', 'manage-UserBasicInfo', 'index');

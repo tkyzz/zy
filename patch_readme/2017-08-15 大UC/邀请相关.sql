@@ -1,0 +1,43 @@
+create table if not EXISTS `tb_invite_final_0` (
+  `uid` varchar(80) not null default '' comment '用户ID',
+  `formUid` varchar(80) not null default '' comment '来源人ID，可能为inviter或者自己',
+  `formUserPhone` varchar(40) not null default '' comment '来源用户手机号',
+  `formUserName` varchar(80) not null default '' comment '来源用户姓名',
+  `rebateNum` int(11) not null default 0 comment '总返利次数',
+  `rebateAmount` int(11) not null default 0 comment '总返利金额',
+  `rebateWaitNum` int (11) not null default 0 comment '待返次数',
+  `rebateWaitAmount` int (11) not null default 0 comment '待返金额',
+  `lastAmount` int(11) not null default 0 comment '最后一次的金额',
+  `lastStatus` TINYINT(4) not null default 0 comment '最后一次的状态:0待返，1已返',
+  `lastRebateTime` timestamp not null default '0000-00-00 00:00:00' comment '最后一次返利的时间',
+  `createTime` timestamp not null default '0000-00-00 00:00:00' comment '创建时间',
+  `updateTime` TIMESTAMP not null DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
+  `rowVersion` INT(11) NOT NULL DEFAULT '1' COMMENT '版本号',
+  `rowLock` VARCHAR(500) NOT NULL DEFAULT '' COMMENT '锁定信息',
+  PRIMARY KEY (`uid`, `formUid`)
+) ENGINE = InnoDB, CHARSET = utf8, comment = '邀请关系统计表';
+
+create table if not exists `tb_invite_rebate_info_0` (
+  `id` VARCHAR(80) not null default '' comment '主键ID',
+  `uid` VARCHAR(80) not null default '' comment '用户ID',
+  `formUid` varchar(80) not null default '' COMMENT '源用户Uid',
+  `formUserPhone` varchar(40) not null default '' comment '来源用户手机号',
+  `formUserName` varchar(80) not null default '' comment '来源用户姓名',
+  `orderNo` varchar(80) not null default '' comment '订单ID',
+  `productNo` varchar(80) not null default '' comment '产品ID',
+  `amount` int(11) not null DEFAULT 0 comment '金额',
+  `couponType` varchar(80) not null DEFAULT '' comment '券类型：coupon代金券',
+  `couponInvestAmount` int(11) not null default 0 comment '券限制：投资限额',
+  `couponName` varchar(80) not null DEFAULT '' COMMENT '券名称',
+  `couponProductList` varchar(1000) not null DEFAULT '' comment '券使用限制产品标签：json形式',
+  `status` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态位：0待返，1已返',
+  `isFirstBuy` TINYINT(4) UNSIGNED not null default 0 comment '是否首次投资：0不是首投，1是首投',
+  `createTime` TIMESTAMP not null DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `updateTime` TIMESTAMP not null DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间-执行返利的时间',
+  `rowVersion` INT(11) NOT NULL DEFAULT '1' COMMENT '版本号',
+  `rowLock` VARCHAR(500) NOT NULL DEFAULT '' COMMENT '锁定信息',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `orderNo` (`orderNo`),
+  KEY `formUid` (`formUid`)
+) ENGINE = InnoDB, CHARSET = utf8, COMMENT = '返利详情表';

@@ -1,0 +1,74 @@
+<?php
+$rand = \Lib\Misc\StringH::randStr(4);
+?>
+<style>
+    .page-<?php echo $rand; ?> .row{
+        margin-top: 5px;
+    }
+    .page-<?php echo $rand; ?>{
+        overflow-y: auto !important;
+    }
+</style>
+<div class="bjui-pageContent page-<?php echo $rand; ?>" style="overflow: hidden">
+<div class="bs-callout bs-callout-info "><h4>添加</h4></div>
+
+    <div style="padding: 10px;border: 1px solid #dddddd" class="rules" id="loadDiv">
+
+        <?php
+        $map = \Rpt\Manage\ManageActivityScheme::getCopy()->getMap();
+        $html = '';
+        foreach ($map as $v => $k){
+            $url = \Sooh2\Misc\Uri::getInstance()->uriTpl(array('__pkey__' => \Rpt\KVObjBase::base64EncodePkey($v)), 'pageupd1');
+            $html .= '<a  data-toggle="ajaxload" class="btn btn-default" href="'. $url .'"  data-target="#loadDiv" >'. $k .'</a> ';
+        }
+
+        ?>
+        <div class="row" style="text-align: center">
+            <?php echo $html; ?>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+    $(function () {
+        var hide_by_name = function(name){
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').hide();
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').prev('label').hide();
+        }
+        var show_by_name = function(name){
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').show();
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').prev('label').show();
+        }
+
+        var hide = function () {
+            $('.page-<?php echo $rand; ?>').find('.rules').hide();
+            hide_by_name('labels[]');
+            show_by_name('coupons');
+        }
+        var show = function () {
+            $('.page-<?php echo $rand; ?>').find('.rules').show();
+            show_by_name('labels[]');
+            hide_by_name('coupons');
+        }
+
+        $('.page-<?php echo $rand; ?> [name="actCode"]').change(function () {
+            var val = $(this).val();
+            console.log(val);
+            if(val == 'oneChui' || val == 'yiMing'){
+                show();
+            }else {
+                hide();
+            }
+
+        })
+
+       // hide();
+
+        //console.log($.CurrentDialog)
+        //$.CurrentDialog.height(650)
+    });
+</script>

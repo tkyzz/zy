@@ -1,0 +1,27 @@
+# 国槐用户同步到tb_user
+DROP TRIGGER IF EXISTS trigger_user_create_event;
+CREATE TRIGGER trigger_user_create_event
+AFTER Insert ON t_wfd_user
+FOR EACH ROW
+BEGIN
+insert into tb_user_0 set oid=new.oid,userAcc=new.userAcc,memberOid=new.memberOid,userPwd=new.userPwd,salt=new.salt,payPwd=new.payPwd,paySalt=new.paySalt,status=new.status,source=new.source,sceneId=new.sceneId,channelid=new.channelid,updateTime=new.updateTime, createTime=new.createTime;
+END;
+
+
+DROP TRIGGER IF EXISTS trigger_user_update_event;
+CREATE TRIGGER trigger_user_update_event
+AFTER UPDATE ON t_wfd_user
+FOR EACH ROW
+BEGIN
+update tb_user_0 set userAcc=new.userAcc,memberOid=new.memberOid,userPwd=new.userPwd,salt=new.salt,payPwd=new.payPwd,paySalt=new.paySalt,status=new.status,source=new.source,sceneId=new.sceneId,channelid=new.channelid,updateTime=new.updateTime where oid=new.oid;
+END;
+
+
+# 注册事件 (线上目前是放在)
+DROP TRIGGER IF EXISTS trigger_onRegisterOk_event;
+CREATE TRIGGER trigger_onRegisterOk_event
+AFTER INSERT ON tb_user_0
+FOR each row
+BEGIN
+    INSERT INTO jz_db.`tb_evtque_0` (`evt`, `objid`, `uid`, `args`, `ret`) VALUES ('RegisterOk', '', NEW.oid, NEW.channelid, '');
+END ;

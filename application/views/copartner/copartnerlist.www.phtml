@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+    <title>渠道列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head><body>
+<?php
+$enableAll =$this->enableAllOrders;
+echo "<hr><table border=1><tr><th>id<th>SN<th>名称<th>url</tr>";
+
+foreach($this->copartnerlist as $r){
+    $url = \Sooh2\Misc\Uri::getInstance()->uri(array('id'=>$r['channelSource'],'sn'=>$r['sign']),'simpledayrpt');
+    $url = str_replace('index.php', 'rpt4copartner.php', $url);
+    echo '<tr><td>'.$r['channelSource'].'<td>'.$r['sign'].'<td>'.$r['channelName']
+    ."<td>http://copartner.zhangyuelicai.com".$url."&ymd=</tr>";
+}
+
+?>
+    </body></html>

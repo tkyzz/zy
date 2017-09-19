@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>掌悦理财</title>
+		<link rel="stylesheet" type="text/css" href="/h5/res/m-notice/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="/h5/res/m-notice/css/noticecontent.css"/>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="mhead">
+				<div class="head_left">
+					<p class="logo"><a href="#"><img src="/h5/res/m-notice/img/logo.png"/></a></p>
+					<p class="title">掌上理财 悦享无忧</p>
+				</div>
+				<div class="head_right" id="no_login">
+					<a class="zc" href="/m/?reg=reg">注册</a>
+					<a class="dl" href="/m/?log=log">登录</a>
+				</div>
+				<div class="head_right" id="logins">
+					<span class="zhanghao">你好，用户</span>
+					<span class="tuichu">退出</span>
+				</div>
+			</div>
+			<div id="noticeContent">
+				<div class="noticeHeader">
+					<a class="nhead_left" href="/notice/wap/index.html">
+						 <img src="/h5/res/m-notice/img/agreement_arrow_left.png" />
+					</a>
+					<div class="nhead_title" >
+						<p class="notice_title">公告详情</p>
+					</div>
+				</div>
+			    <div class="noticeBox" id="noticeBox">
+			      	<!--
+					<p class="notice_contentTlt"><?php echo $data['title'];?></p>
+			      	-->
+					<div class="notice_content">
+			      		<?php echo $data['linkHtml'];?>
+					</div>
+			    </div>
+			  </div>
+			<div class="footernav">
+				<div class="foot_nav">
+					<a href="https://www.zhangyuelicai.com/m/#/downapp">APP下载</a>
+	        		<a class="btn" data-clipboard-target="#foo" id="weixin" href="javascrip:void(0)">微信</a>
+					<a href="http://weibo.com/6095763264/profile?topnav=1&wvr=6">微博</a>
+					<a href="tel:400-611-8088">客服</a>
+				</div>
+				<ul class="introduce">
+					<li>© 2017 掌悦理财 All Rights Reserved</li>
+					<li>上海顽色投资管理有限公司</li>
+					<li>沪ICP备17003317号-1  市场有风险 投资需谨慎</li>
+				</ul>
+				<input id="foo" value="zhangyuelicai" style="width: 1px;height: 1px;opacity: 0">
+			</div>
+	    	<div class="promptx" id="promptx"><span>复制成功</span></div>
+	    	<div class="suspend" id="suspend" style="height: 1.44rem;">
+				<div class="su_left">
+					<p class="su_logo"><img src="/h5/res/m-notice/img/footer_logo.png"/></p>
+					<p class="su_title">注册领取<span>688</span>元新手红包</p>
+				</div>
+				<div class="su_right">
+					<a href="https://www.zhangyuelicai.com/m/#/downapp" class="su_btn">点击领取</a>
+					<p class="close" id="close"><img src="/h5/res/m-notice/img/close.png"/></p>
+				</div>
+			</div>
+		</div>
+		<script src="/h5/res/m-notice/js/zepto_1.2.0_min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/h5/res/m-notice/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/h5/res/m-notice/js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/h5/res/m-notice/js/notices.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

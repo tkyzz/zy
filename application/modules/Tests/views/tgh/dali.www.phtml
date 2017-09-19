@@ -1,0 +1,308 @@
+<html>
+<head>
+    <style>
+        .row{
+            margin-bottom: 10px;
+        }
+    </style>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container " style="margin: 10px">
+    <div class="row">
+        <div class="col-md-2">
+            <input class="form-control " placeholder="phone" name="phone">
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-default" id="register">注册</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-default" id="login">登录</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-default" id="userInfo">用户信息</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input class="form-control " placeholder="bankCardNo" name="bankCardNo" value="6228481750885998889">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control " placeholder="certNo" name="certNo" value="340823199311284949">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <input class="form-control " placeholder="smscode" name="smscode">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control " placeholder="orderNo" name="orderNo">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default" id="bind1">绑卡第一步</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default" id="bind2">绑卡第二步</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-default" id="unbind">解绑</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-default" id="setPayPwd">设置支付密码</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <input class="form-control " placeholder="amount" name="amount">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control " placeholder="smscode" name="recharge_code">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control " placeholder="orderNo" name="recharge_orderNo">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default" id="recharge1">充值第一步</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default" id="recharge2">充值第二步</button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    $(function () {
+        var View = {
+            params : {},
+
+            init : function () {
+                $.ajaxSetup({
+                    contentType : "application/json"
+                });
+
+                $('button').each(function(){
+                    $(this).click(function () {
+                        var id = $(this).attr('id');
+                        View['click_'+ id](this);
+                    });
+                })
+
+                $('input').each(function(){
+                    //console.log(this);
+                    var name = $(this).attr('name');
+                    if(!$(this).val())$(this).val(View.getCookie(name));
+                })
+            },
+
+            click_userInfo : function (that){
+                var api = '/actives/public/donothing';
+                var params = {
+                    extendInfo : [
+                        'UserBasicInfo'
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e.extendInfo.UserBasicInfo)
+                })
+            },
+
+            click_register : function (that) {
+                var phone = this.getVal('phone');
+                var params = {
+                    smsType : 'regist',
+                    platform : 'pc',
+                    phone : phone
+                };
+                console.log(params);
+                var api = '/platform/Userpub/sendsms';
+                $.post(api , JSON.stringify(params) , function (e) {
+                    console.log(e)
+                    if(1 == 1){
+                        var api = '/platform/Userpub/login';
+                        var params = {
+                            phone : phone,
+                            veriCode : 111111,
+                            contractId : '117120170615234525',
+                        };
+                        $.post(api , JSON.stringify(params) , function(e){
+                            console.log(e)
+                        });
+                    }
+                })
+            },
+
+            click_login : function(that){
+                var phone = this.getVal('phone');
+                var params = {
+                    smsType : 'login',
+                    platform : 'pc',
+                    phone : phone
+                };
+                console.log(params);
+                var api = '/platform/Userpub/sendsms';
+                $.post(api , JSON.stringify(params) , function (e) {
+                    console.log(e)
+                    if(1 == 1){
+                        var api = '/platform/Userpub/login';
+                        var params = {
+                            phone : phone,
+                            veriCode : 111111
+                        };
+                        $.post(api , JSON.stringify(params) , function(e){
+                            console.log(e)
+                        });
+                    }
+                })
+            },
+
+            click_bind1 : function(that){
+                var apiPre = '/payment/account/bindBankCardPreVerify';
+                var api = '/payment/account/authVerify';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {
+                        "realName": "大力",
+                        "certNo": View.getVal('certNo'),
+                        "mailAddr": "xxx@xxx.com",
+                        "bankPhone": "13262798028",
+                        "bankCardNo": View.getVal('bankCardNo'),
+                        "bankCode": "ABC"
+                    },
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(apiPre , '{"reqTime": "2017034261753333","data": {},"extendInfo": ["string"]}' , function (e) {
+                    console.log(e.message)
+                    $.post(api, JSON.stringify(params) , function(e){
+                        console.log(e.message)
+                        if(e.code == 10000){
+                            $('[name="orderNo"]').val(e.data.orderNo);
+                            View.setCookie('orderNo' , e.data.orderNo);
+                            console.log(e.data.orderNo)
+                        }
+                    })
+                })
+
+            },
+
+            click_recharge1 : function(that){
+                var api = '/payment/trade/validRecharge';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {
+                        "rechargeAmount": View.getVal('amount')
+                    },
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e)
+                    if(e.code == 10000){
+                        $('[name="recharge_orderNo"]').val(e.data.orderNo);
+                        View.setCookie('recharge_orderNo' , e.data.orderNo);
+                        console.log(e.data.orderNo)
+                    }
+                })
+            },
+
+            click_bind2 : function(that){
+                var api = '/payment/account/bindBankCard';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {
+                        "securityCode": View.getVal('smscode'),
+                        "orderNo": View.getVal('orderNo')
+                    },
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e)
+                })
+            },
+
+            click_recharge2 : function(that){
+                var api = '/payment/trade/recharge';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {
+                        "securityCode": View.getVal('recharge_code'),
+                        "password": "111111",
+                        "orderNo": View.getVal('recharge_orderNo')
+                    },
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e)
+                })
+            },
+
+            click_unbind:function(that){
+                var api = '/payment/account/unbindBankCard';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {},
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e)
+                })
+            },
+
+            click_setPayPwd : function(that){
+                var api = '/payment/account/setPayPwd';
+                var params = {
+                    "reqTime": "2017034261753333",
+                    "data": {
+                        "password": "111111"
+                    },
+                    "extendInfo": [
+                        "string"
+                    ]
+                };
+                $.post(api, JSON.stringify(params) , function(e){
+                    console.log(e)
+                })
+            },
+
+            getVal : function(name){
+                var val = $('[name="'+ name +'"]').val();
+                View.setCookie(name , val);
+                return val;
+            },
+
+            getCookie : function(name){
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                    return unescape(arr[2]);
+                else
+                    return null;
+            },
+
+            setCookie : function(name , val){
+                document.cookie = name + "=" +val;
+            }
+
+        };
+        View.init();
+    });
+</script>
+</html>

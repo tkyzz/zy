@@ -1,0 +1,54 @@
+<script>
+    $(function () {
+        var view = {
+            init : function () {
+                console.log('init...');
+                this.render();
+                var val = this.input('isFloat').val();
+                view.render_isFloat(val);
+            },
+            render : function () {
+                this.tap_type();
+                this.tap_isFloat();
+            },
+            tap_type : function () {
+                this.input('type').change(function () {
+                    var val = $(this).val();
+                    console.log(val);
+                    if(val == 'redPackets'){
+                        //view.input('isFloat').selectpicker('val', 1);
+                        //view.input('isFloat').attr('disabled' , true);
+                        view.input('investAmount').attr('disabled' , true);
+                        view.input('labels[]').attr('disabled' , true);
+                    }
+                    if(val == 'coupon'){
+                        //view.input('isFloat').selectpicker('val', 0);
+                        //view.input('isFloat').attr('disabled' , false);
+                        view.input('investAmount').attr('disabled' , false);
+                        view.input('labels[]').attr('disabled' , false);
+                    }
+                })
+            },
+            tap_isFloat : function () {
+                this.input('isFloat').change(function () {
+                    var val = $(this).val();
+                    view.render_isFloat(val);
+                });
+            },
+            input : function (str) {
+                return $('.bjui-pageContent.coupon-pageadd').find('[name="'+str+'"]')
+            },
+            render_isFloat : function (val) {
+                console.log(val);
+                if(val == 1){
+                    view.input('upperAmount').attr('disabled' , true);
+                    view.input('totalAmount').attr('disabled' , false);
+                }else{
+                    view.input('upperAmount').attr('disabled' , false);
+                    view.input('totalAmount').attr('disabled' , true);
+                }
+            }
+        };
+        view.init();
+    });
+</script>

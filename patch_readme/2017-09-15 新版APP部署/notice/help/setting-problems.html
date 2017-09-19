@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html manifest="manifest/setting-problems.appcache">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>常见问题</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/app.css" rel="stylesheet" />
+
+		<style type="text/css">
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" id="setting_problems">
+
+			<ul class="mui-table-view app_mt10">
+		<!--fg--><li class="mui-table-view-cell app_links" data-showid="59b6764ea6b21" data-title="注册登录"><a class="mui-navigate-right">注册登录</a></li><li class="mui-table-view-cell app_links" data-showid="59b0eaa76f9ec" data-title="关于平台"><a class="mui-navigate-right">关于平台</a></li><li class="mui-table-view-cell app_links" data-showid="59b0eb023ebd3" data-title="理财产品"><a class="mui-navigate-right">理财产品</a></li><li class="mui-table-view-cell app_links" data-showid="59b676a52378c" data-title="身份认证"><a class="mui-navigate-right">身份认证</a></li><li class="mui-table-view-cell app_links" data-showid="59b676e54f5d5" data-title="银行卡认证"><a class="mui-navigate-right">银行卡认证</a></li><li class="mui-table-view-cell app_links" data-showid="59b677180595a" data-title="充值提现"><a class="mui-navigate-right">充值提现</a></li><li class="mui-table-view-cell app_links" data-showid="59b67782403be" data-title="投资赎回"><a class="mui-navigate-right">投资赎回</a></li><li class="mui-table-view-cell app_links" data-showid="59b6783054b01" data-title="账户管理"><a class="mui-navigate-right">账户管理</a></li><li class="mui-table-view-cell app_links" data-showid="59b6790390f49" data-title="红包福利"><a class="mui-navigate-right">红包福利</a></li><li class="mui-table-view-cell app_links" data-showid="59b67943830e6" data-title="好友邀请"><a class="mui-navigate-right">好友邀请</a></li><!--fg-->
+			</ul>
+
+		</div>
+		<script src="js/component/zepto.min.js"></script>
+		<script type="text/javascript">
+			
+			$(function(){
+				$(".app_links").on("touchend",function() {
+					var showid = $(this).attr("data-showid");
+					var title = $(this).attr("data-title");
+					location.href="setting-problems-details.html?showId="+showid+"&title="+escape(title);
+					
+				})
+			});
+		</script>
+	</body>
+
+</html>

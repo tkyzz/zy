@@ -1,0 +1,78 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "PHP\u2014\u2014APi",
+        "description": "my project \u63a5\u53e3\u6587\u6863, V2-3.<br> \r\n\u4ee5\u540e\u5927\u5bb6\u5c31\u5728\u8fd9\u91cc\u6109\u5feb\u7684\u5bf9\u63a5\u53e3\u628a!<br> \r\n\u4ee5\u540e\u5927\u5bb6\u5c31\u5728\u8fd9\u91cc\u6109\u5feb\u7684\u5bf9\u63a5\u53e3\u628a!<br> \r\n\u4ee5\u540e\u5927\u5bb6\u5c31\u5728\u8fd9\u91cc\u6109\u5feb\u7684\u5bf9\u63a5\u53e3\u628a!<br> \r\n",
+        "version": "2.3"
+    },
+    "host": "106.14.25.126/tests",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/hello/history": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get\u6d4b\u8bd5\u63a5\u53e3",
+                "description": "sooh2Get\u6d4b\u8bd5\u63a5\u53e3",
+                "operationId": "historyAction",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "formData",
+                        "description": "\u4ea7\u54c1id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Product": {
+            "required": [
+                "reqTime"
+            ],
+            "properties": {
+                "reqTime": {
+                    "description": "",
+                    "type": "string"
+                },
+                "channelId": {
+                    "description": "",
+                    "type": "string"
+                },
+                "tag": {
+                    "description": ""
+                }
+            },
+            "type": "object"
+        }
+    },
+    "tags": [
+        {
+            "name": "User",
+            "description": "\u7528\u6237\u64cd\u4f5c"
+        },
+        {
+            "name": "MainPage",
+            "description": "\u9996\u9875\u6a21\u5757"
+        },
+        {
+            "name": "News",
+            "description": "\u65b0\u95fb\u8d44\u8baf"
+        },
+        {
+            "name": "Misc",
+            "description": "\u5176\u4ed6\u63a5\u53e3"
+        }
+    ]
+}

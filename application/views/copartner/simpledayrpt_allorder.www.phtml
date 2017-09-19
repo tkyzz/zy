@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+    <title>订单一览</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head><body>
+<?php
+echo $this->copartner." - ".$this->rptYmd."<hr>";
+//echo \Sooh2\Util::toJsonSimple($this->rptDay);
+$prdt = $this->prdt;
+$users = $this->users;
+echo "<br><table border=1><tr><th>用户<th>手机号<th>产品<th>时间<th>投资金额</tr>";
+
+foreach($this->orders as $r){
+    $uid = $r['userId'];
+    echo '<tr><td>'.$users[$uid]['realname'].'<td>'.$users[$uid]['phone'];
+    echo '<td>'.$prdt[$r['productId']].'<td>'.$r['createTime'].'<td>'.number_format($r['orderAmount'],2)."</tr>";
+}
+echo '</table>';
+?>
+    </body></html>
+

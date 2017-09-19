@@ -1,0 +1,83 @@
+<?php
+$rand = \Lib\Misc\StringH::randStr(4);
+?>
+<style>
+    .page-<?php echo $rand; ?> .row{
+        margin-top: 5px;
+    }
+    .page-<?php echo $rand; ?>{
+        overflow-y: auto !important;
+    }
+</style>
+<div class="bjui-pageContent page-<?php echo $rand; ?>" style="overflow: hidden">
+<div class="bs-callout bs-callout-info "><h4><?php echo \Sooh2\BJUI\Pages\AddInDlg::getInstance()->title; ?></h4></div>
+    <?php
+        /** @var Sooh2\BJUI\Forms\Edit $edtForm */
+        $edtForm = $this->edtForm;
+        echo $edtForm->startForm();
+        echo $edtForm->renderForm(2);
+    ?>
+    <div style="padding: 10px;border: 1px solid #dddddd" class="rules">
+        <h4>值设置</h4>
+        <div class="row">
+            <div class="col-md-3">最小金额</div>
+            <div class="col-md-3">最大金额</div>
+            <div class="col-md-6">概率(请输入小数)</div>
+        </div>
+        <?php
+            foreach ($this->ruleForm as $k => $v){
+                echo ' <div class="row">';
+                foreach ($v as $vv){
+                   // \Prj\Loger::out($vv);
+                    echo '<div class="col-md-3">'. $vv->render() .'</div>';
+                }
+                echo '</div>';
+            }
+        ?>
+    </div>
+    <?php
+        echo $edtForm->endForm();
+    ?>
+</div>
+<div class="bjui-pageFooter"><ul><li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+<li><button type="submit" class="btn-default"  data-icon="save">保存</button></li></ul></div>
+
+<script>
+    $(function () {
+        var hide_by_name = function(name){
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').hide();
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').prev('label').hide();
+        }
+        var show_by_name = function(name){
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').show();
+            $('.page-<?php echo $rand; ?>').find('[name="'+name+'"]').closest('.row-input').prev('label').show();
+        }
+
+        var hide = function () {
+            $('.page-<?php echo $rand; ?>').find('.rules').hide();
+            hide_by_name('labels[]');
+            show_by_name('coupons');
+        }
+        var show = function () {
+            $('.page-<?php echo $rand; ?>').find('.rules').show();
+            show_by_name('labels[]');
+            hide_by_name('coupons');
+        }
+
+        $('.page-<?php echo $rand; ?> [name="actCode"]').change(function () {
+            var val = $(this).val();
+            console.log(val);
+            if(val == 'oneChui' || val == 'yiMing'){
+                show();
+            }else {
+                hide();
+            }
+
+        })
+
+       // hide();
+
+        //console.log($.CurrentDialog)
+        //$.CurrentDialog.height(650)
+    });
+</script>

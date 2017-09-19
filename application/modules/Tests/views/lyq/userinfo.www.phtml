@@ -1,0 +1,110 @@
+<?php
+$funcEchoStr = function ($k, $v) {
+    return "<label>$k</label>:&nbsp;&nbsp;&nbsp;&nbsp;<label>$v</label></br>";
+};
+
+if (is_string($this->data)) {
+    echo $this->data;
+} else {
+    foreach ($this->data as $k => $v) {
+        switch ($k) {
+            case 'userId':
+                echo $funcEchoStr('用户ID', $v);
+                break;
+            case 'phone':
+                echo $funcEchoStr('手机号', $v);
+                break;
+            case 'isCheckin':
+                echo $funcEchoStr('是否签到', $v ? '已签到' : '未签到');
+                break;
+            case 'isPwd':
+                echo $funcEchoStr('是否设置登录密码', $v ? '已设置' : '未设置');
+                break;
+            case 'isPayPwd':
+                echo $funcEchoStr('是否设置支付密码', $v ? '已设置' : '未设置');
+                break;
+            case 'inviteCode':
+                echo $funcEchoStr('我的邀请码', $v);
+                break;
+            case 'registerTime':
+                echo $funcEchoStr('注册时间', date('Y-m-d H:i:s', strtotime($v)));
+                break;
+            case 'isTiro':
+                echo $funcEchoStr('是否新手', $v ? '' : '');
+                break;
+            case 'realName':
+                echo $funcEchoStr('真实姓名', $v);
+                break;
+            case 'birthday':
+                echo $funcEchoStr('生日', $v ? date('Y-m-d', strtotime($v)) : '未设置');
+                break;
+            case 'idCard':
+                echo $funcEchoStr('身份证', $v);
+                break;
+            case 'contractId':
+                echo $funcEchoStr('渠道号', $v);
+                break;
+            case 'platform':
+                echo $funcEchoStr('注册平台', $v);
+                break;
+            case 'tdId':
+                echo $funcEchoStr('tdId', $v);
+                break;
+            case 'inviter':
+                echo $funcEchoStr('上级邀请人', $v ? \Prj\Bll\User::getInstance()->getFieldByUid($this->uid, 'phone') : '');
+                break;
+            case 'fatherInviter':
+                echo $funcEchoStr('上上级邀请人', $v ? \Prj\Bll\User::getInstance()->getFieldByUid($this->uid, 'phone') : '');
+                break;
+            case 'rootInviter':
+                echo $funcEchoStr('根邀请人', $v ? \Prj\Bll\User::getInstance()->getFieldByUid($this->uid, 'phone') : '');
+                break;
+            case 'rebateAmount':
+                echo $funcEchoStr('已返利金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'waitRebateAmount':
+                echo $funcEchoStr('待返利金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'rechargeTotalAmount':
+                echo $funcEchoStr('累计充值金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'investTotalAmount':
+                echo $funcEchoStr('累计投资金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'investWayAmount':
+                echo $funcEchoStr('投资在途金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'withdrawWayAmount':
+                echo $funcEchoStr('提现在途金额', sprintf('%.2f', $v / 100));
+                break;
+            case 'gender':
+                echo $funcEchoStr('性别', $v ? ($v == 1 ? '男' : '女') : '未设置');
+                break;
+            case 'addrCode':
+                echo $funcEchoStr('地址代号', $v);
+                break;
+            case 'realName':
+                echo $funcEchoStr('实名', $v);
+                break;
+            case 'bankCard':
+                echo $funcEchoStr('银行卡号', $v);
+                break;
+            case 'bankCode':
+                echo $funcEchoStr('银行所属代号', $v);
+                break;
+            case 'isOrder':
+                echo $funcEchoStr('是否购买', $v);
+                break;
+            case 'isRecharge':
+                echo $funcEchoStr('是否充值', $v);
+                break;
+            case 'isBindCard':
+                echo $funcEchoStr('是否绑卡', $v);
+                break;
+            case 'isRealVerifiedName':
+                echo $funcEchoStr('是否实名', $v);
+                break;
+        }
+    }
+}
+?>

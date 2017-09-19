@@ -1,0 +1,34 @@
+
+<script type="text/javascript">
+
+    $(function () {
+        $("body").unbind("click").on("click",".invite",function(){
+            $("input[type='text']").val('');
+            var inputs = $(this).data("title");
+            $("[name='uid']").val(inputs);
+            $("[data-icon='search']").click();
+        });
+        $("body").on("click",".inviteNum",function(){
+            $("input[type='text']").val('');
+            var inputs = $(this).data("title");
+            $("input[name='inviter']").val(inputs);
+            $("[data-icon='search']").click();
+        });
+        $("body").on("click",".rebateNum",function(){
+            $("input[type='text']").val('');
+            var inputs = $(this).data("title");
+            $("input[name='rebateNum']").val(inputs);
+            $("[data-icon='search']").click();
+        });
+
+        $("button[type='reset']").click(function(){
+            $("input[type='text']").attr("value","");
+        })
+
+
+
+    });
+
+
+
+</script>
